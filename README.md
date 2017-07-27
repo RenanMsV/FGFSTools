@@ -1,4 +1,4 @@
-# FGFSTools
+# FGFSTools | PYTHON 3 ONLY
 
 
 ## How to:
