@@ -82,3 +82,24 @@ Mostra dados do FlightRadar24. Dados contém todas aéronaves em uma área.
 coords = get_coords_bounding_box(-22.907104,-47.063240, 20) # lat , lon , distancia em km
 get_FR24_nearplanes(coords)
 ```
+By BR-RVD
+### FlightGearAc3dBitmaptoPNG.py
+
+Converts model textures from BMP to PNG and apply it to the model. Require textures to be at the same path as the models.
+Good for dealing with model convertions.
+Place the script anywhere and make a new 'Models' folder there. Place all models you want to be converted there (you can include more folders inside the first Models folder). A new folder called 'OutModels' will be created with the converted files. This will not touch original files (you can delete all original bitmap files if you open the .py file and change the 'deleteBMPFiles' variable value to True.
+Converte texturas de modelo de BMP para PNG e aplica-o ao modelo. Exige-se que as texturas estejam na mesma pasta dos modelos.
+Bom para lidar com as conversões de modelos.
+Coloque o script em qualquer lugar e crie uma nova pasta chamada 'Models'. Coloque todos os modelos que você deseja converter (você pode incluir mais pastas dentro da primeira pasta Models). Uma nova pasta chamada 'OutModels' será criada com os arquivos convertidos. Isso não tocará em arquivos originais (você pode excluir todos os arquivos de bitmap originais se abrir o arquivo .py e alterar o valor da variável 'deleteBMPFiles' para True.
+```
+  ROOTFOLDER/
+      FlightGearAc3dBitmaptoPNG.py
+      Models/
+          Misc/
+              Model1.ac
+              Model1.bmp
+          Aircraft/
+              Airplane.ac
+              Airplane.bmp
+```
+By BR-RVD
