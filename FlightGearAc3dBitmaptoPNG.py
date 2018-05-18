@@ -7,10 +7,13 @@ import os
 import re
 
 logFile = open("log.txt", 'w')
-fileout = open('fileout.txt', 'w')
+imgfound = []
+imgnotFound = []
+skipped = []
 
-print("Source Path : {} . Output Path : {} . Delete BMP Files : {} .\nContinue? Y | N".format(sourcePath,outputPath,deleteBMPFiles))
+print("Source Path : {} . Output Path : {} . Delete BMP Files : {} .\nContinue? Y | N (upper case)".format(sourcePath,outputPath,deleteBMPFiles))
 if not input() == 'Y':
+	print('Canceled by user')
 	die()
 
 def reportFilesByType(fileType):
@@ -43,10 +46,21 @@ def playAlertSound():
 	import winsound
 	winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
 
-def debug(line, log=False, out = False):
+def debug(line, log=False, found = False):
 	print(line.strip())
-	if(log): logFile.write(line)
-	if(out): fileout.write(line)
+	if log:
+		if found:
+			imgfound.append(line)
+		else:
+			imgnotFound.append(line)
+
+def writeLog():
+	logFile.write('[Image Found]\n')
+	logFile.write(''.join(imgfound))
+	logFile.write('\n[Image Skipped]\n')
+	logFile.write('\n'.join(skipped))
+	logFile.write('\n[Image Not Found]\n')
+	logFile.write(''.join(imgnotFound))
 
 def deleteFile(path):
 	try:
@@ -58,12 +72,17 @@ def ac3dmodeltexturechange(path, tfrom, tto):
 	lines = open(path).readlines()
 	for lineindex, line in enumerate(lines): # for with line index so we can change it later
 		if re.search(tfrom, line, re.IGNORECASE): # line contains the file extension
-			debug("Found texture line at model: {}".format(line), out = True)
+			debug("Found texture line at model: {}".format(line), log = True, found = True)
 			if "/" not in line or re.search("C:/", line, re.IGNORECASE): # line not contains / meaning the image is in the same path
 				if re.search("C:/", line, re.IGNORECASE):
 					line = 'texture "{}"\n'.format(line.strip().split('"')[1].split("/")[-1])
 				try:
-					convertImage("{}\\{}".format("\\".join(path.split("\\")[:-1]), line.strip().split('"')[1]), outputPath)
+					localOutPath = "{}{}{}".format(outputPath, "{}\\{}".format("\\".join(path.split("\\")[:-1]), line.strip().split('"')[1]).split('.')[:-1][0], tto)
+					if os.path.exists(localOutPath) == False:
+						convertImage("{}\\{}".format("\\".join(path.split("\\")[:-1]), line.strip().split('"')[1]), outputPath)
+					else:
+						debug('Skipping Image {} already exists'.format(localOutPath))
+						skipped.append(localOutPath)
 					line = re.sub("(?i)" + tfrom, tto, line)
 					lines[lineindex] = line
 				except:
@@ -91,6 +110,7 @@ def newac3dtexturechange():
 	if deleteBMPFiles:
 		for item in findFilesByType('.bmp'):
 			deleteFile(item)
+	writeLog()
 
 
 newac3dtexturechange()
