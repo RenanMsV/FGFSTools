@@ -3,9 +3,12 @@
 
 import sys
 
-infile = open(sys.argv[1], 'r')
-
-airport = sys.argv[2].upper()
+if (len(sys.argv) > 1):
+        infile = open(sys.argv[1], 'r')
+        airport = sys.argv[2].upper()
+else:
+        infile = open(input('Type the airport.dat file name. Example: SBGR.dat\n'), 'r')
+        airport = input('Type the airport ICAO that you want to convert. Example: SBGR\n').upper()
 
 found = False
 
