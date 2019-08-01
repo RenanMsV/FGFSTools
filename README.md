@@ -104,3 +104,19 @@ Coloque o script em qualquer lugar e crie uma nova pasta chamada 'Models'. Coloq
               Airplane.bmp
 ```
 By BR-RVD
+
+### telnetFG.py.py
+
+A way to communicate with FlightGear's property tree with python and telnet. Useful if you're trying to do hardware stuff. Setup ports in the FlightGear launcher is required.
+
+Uma maneira de comunicar-se com a arvore de propriedades do FlightGear com telnet e python. Util se estiver tentando fazer algo com hardware. Ajustar as portas no launcher do Flightgear é requerido.
+
+By BR-RVD
+
+### flightgear_query_mpserver.py.py
+
+A way to query all players in the FlightGear's mp servers, their location, their aircraft type and model... using telnet.
+
+Uma maneira de requisitar informações dos servidores do FlightGear como todos os jogadores, suas posições, tipos de aronaves e modelos... usando telnet.
+
+By BR-RVD
